@@ -6,20 +6,22 @@ const width = 400, height = 300;
 const svg = d3.select("#plot-container")
     .append("svg")
     .attr("width", width)
-    .attr("height", height)
-    .append("g");  // Group element for transformation (zoom and pan)
+    .attr("height", height);
+
+// Define a group element for zoomable content
+const plotGroup = svg.append("g");
 
 // Define zoom behavior
 const zoom = d3.zoom()
     .scaleExtent([1, 10])  // Set the zoom range
     .on("zoom", function(event) {
-        svg.attr("transform", event.transform);  // Apply transformation on zoom
+        plotGroup.attr("transform", event.transform);  // Apply transformation on zoom
     });
 
 svg.call(zoom);  // Apply zoom to the SVG
 
 // Create bars for the chart
-svg.selectAll("rect")
+plotGroup.selectAll("rect")
     .data(data)
     .enter()
     .append("rect")
